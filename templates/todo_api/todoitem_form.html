@@ -1,0 +1,33 @@
+<!-- todo/todo_api/templates/index/todoitem_form.html -->
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<h3>{{ title }}</h3>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <table>
+
+        {{ form.as_table }}
+
+    </table>
+
+    <input
+
+        value="Submit"
+
+        type="submit">
+
+
+    {% if object %}
+    {% endif %}
+</form>
+
+
+{% endblock %}
