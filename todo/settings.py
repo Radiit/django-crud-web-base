@@ -1,4 +1,25 @@
 import os
+import environ
+from getenv import env
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# env = environ.Env()
+
+# read th .env file
+environ.Env.read_env()    
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','wwf*2#86t64!fgh6yav$aoeuo@u2o@fy&*gg76q!&%4i_tbouau')
+
+DEBUG = os.getenv('DEBUG')
+
+ALLOWED_HOSTS = ['*']
+
+# import os
+# import environ
+
+# env = environ.Env()
+# environ.Env.read_env(os.path.join('todo/.env'))
 
 """
 Django settings for todo project.
@@ -22,10 +43,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4zmu)+v+#o12-amyeryrp)a7sk3ngavuc6q4c6lm0_s^qvk_^r'
+# SECRET_KEY = env('django-insecure-4zmu)+v+#o12-amyeryrp)a7sk3ngavuc6q4c6lm0_s^qvk_^r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -41,6 +62,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'todo_api',
+    'rest_auth',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -79,8 +102,12 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'postgres',
+        'PASSWORD': 'daffaadit123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -125,3 +152,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL ='todo_api.userData'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}

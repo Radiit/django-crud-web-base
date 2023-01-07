@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from todo_api import views
+from todo_api import urls as todo_urls
 from django.http import HttpResponse
-
+# from todo_api import views as todoViews
 urlpatterns = [
 
     path("admin/", admin.site.urls),
